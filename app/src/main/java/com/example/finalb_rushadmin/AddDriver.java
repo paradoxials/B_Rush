@@ -3,6 +3,7 @@ package com.example.finalb_rushadmin;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,15 +22,15 @@ public class AddDriver extends AppCompatActivity {
         setContentView(R.layout.activity_add_driver);
         databaseHelper = new DatabaseHelper(this);
         //get the values
-        fname = (EditText) findViewById(R.id.getDriverFName);
-        mname = (EditText) findViewById(R.id.getDriverMName);
-        lname = (EditText) findViewById(R.id.getDriverLName);
-        add = (EditText) findViewById(R.id.getDriverAddress);
-        bday = (EditText) findViewById(R.id.getDriverBday);
-        num = (EditText) findViewById(R.id.getDriverContactNum);
+        fname = (EditText) findViewById(R.id.driverFName);
+        mname = (EditText) findViewById(R.id.driverMName);
+        lname = (EditText) findViewById(R.id.driverLName);
+        add = (EditText) findViewById(R.id.driverAddress);
+        bday = (EditText) findViewById(R.id.driverBday);
+        num = (EditText) findViewById(R.id.driverContactNum);
 
         //button to insert a new driver
-        btnAddDriver = (Button) findViewById(R.id.btnAddDriver);
+        btnAddDriver = (Button) findViewById(R.id.addDriver);
         InsertDriverData();
     }
 
@@ -38,12 +39,10 @@ public class AddDriver extends AppCompatActivity {
         btnAddDriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isInserted = databaseHelper.insertPerson(fname.getText().toString(), mname.getText().toString(),
-                        lname.getText().toString(), add.getText().toString(), bday.getText().toString(),
-                        num.getText().toString());
-                if(isInserted)
-                { Toast.makeText(AddDriver.this, "Data inserted", Toast.LENGTH_SHORT).show(); }
-                else {Toast.makeText(AddDriver.this, "Failed to insert data", Toast.LENGTH_SHORT).show();}
+                boolean isInserted = databaseHelper.insertBusDriver(fname.getText().toString(), mname.getText().toString(), lname.getText().toString(),
+                        add.getText().toString(), bday.getText().toString(), num.getText().toString());
+                if(isInserted){ Toast.makeText(AddDriver.this, "Data is inserted", Toast.LENGTH_SHORT).show(); }
+                else { Toast.makeText(AddDriver.this, "Failed to insert data", Toast.LENGTH_SHORT).show();}
             }
         });
     }

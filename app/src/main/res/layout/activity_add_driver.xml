@@ -48,7 +48,7 @@
             android:translationY="55dp" />
 
         <EditText
-            android:id="@+id/getDriverFName"
+            android:id="@+id/driverFName"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
@@ -71,7 +71,7 @@
             android:translationY="70dp" />
 
         <EditText
-            android:id="@+id/getDriverMName"
+            android:id="@+id/driverMName"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
@@ -94,7 +94,7 @@
             android:translationY="85dp" />
 
         <EditText
-            android:id="@+id/getDriverLName"
+            android:id="@+id/driverLName"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
@@ -117,7 +117,7 @@
             android:translationY="100dp" />
 
         <EditText
-            android:id="@+id/getDriverAddress"
+            android:id="@+id/driverAddress"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
@@ -140,13 +140,13 @@
             android:translationY="115dp" />
 
         <EditText
-            android:id="@+id/getDriverBday"
+            android:id="@+id/driverBday"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/input_textbox"
             android:ems="10"
-            android:hint="Enter Birthday"
+            android:hint="DD/MM/YYYY"
             android:inputType="date"
             android:padding="5sp"
             android:paddingStart="20sp"
@@ -164,7 +164,7 @@
             android:translationY="130dp" />
 
         <EditText
-            android:id="@+id/getDriverContactNum"
+            android:id="@+id/driverContactNum"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
@@ -172,6 +172,7 @@
             android:elevation="4dp"
             android:ems="10"
             android:hint="Enter Contact Number"
+            android:maxLength="11"
             android:inputType="number"
             android:padding="5sp"
             android:paddingStart="20sp"

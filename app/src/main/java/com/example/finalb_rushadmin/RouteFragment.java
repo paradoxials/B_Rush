@@ -15,11 +15,13 @@ import androidx.fragment.app.Fragment;
 public class RouteFragment extends Fragment{
     private Button b1;
     private ImageView imgUp, imgDel;
+    private DatabaseHelper databaseHelper;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_bus_route, container, false);
+        initializeDatabase();
 
         b1 = v.findViewById(R.id.btnAddRoute);
         b1.setOnClickListener(new View.OnClickListener() {
@@ -50,4 +52,11 @@ public class RouteFragment extends Fragment{
         return v;
     }
 
+    public void initializeDatabase()
+    {
+        if(databaseHelper == null)
+        {
+            databaseHelper = new DatabaseHelper(getActivity());
+        }
+    }
 }

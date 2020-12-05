@@ -2,8 +2,12 @@ package com.example.finalb_rushadmin;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "B-rushDatabase.db";
@@ -96,7 +100,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             +COLUMN_FK_PAYMENT+" INTEGER,"+COLUMN_FK_SEAT+"	INTEGER,"+COLUMN_SEAT_NUMBER+"INTEGER,"+COLUMN_STATUS+"	TEXT,"+COLUMN_ISCANCELLED+"	Boolean," +
             "FOREIGN KEY("+COLUMN_FK_PAYMENT+") REFERENCES "+TABLE_PAYMENT+"("+COLUMN_ID+"),FOREIGN KEY("+COLUMN_FK_USER+") REFERENCES "+TABLE_USER+
             "("+COLUMN_ID+"),FOREIGN KEY("+COLUMN_FK_SEAT+") REFERENCES " +TABLE_BUS_SEAT+ " ("+COLUMN_ID+"))";
+    private Object SQLiteException;
 
+    //methods to use in order to connect to the Database
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DB_VERSION);
     }
@@ -132,22 +138,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Insert, Update, get , and delete kay example methods para nila
-   /* public boolean insertData(String name,String surname,String marks) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2,name);
-        contentValues.put(COL_3,surname);
-        contentValues.put(COL_4,marks);
-        long result = db.insert(TABLE_NAME,null ,contentValues);
-        if(result == -1)
-            return false;
-        else
-            return true;
-    }*/
-
-    public boolean insertPerson(String fname, String mname, String lname, String add, String bday, String num)
-    {
+    //inserting new data row
+    private long insertPerson(String fname, String mname, String lname, String add, String bday, String num) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_FNAME, fname);
@@ -157,13 +149,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_BDAY, bday);
         contentValues.put(COLUMN_CONTACT_NUM, num);
         long res = db.insert(TABLE_PERSON, null, contentValues);
-        if(res == -1){ return false; }
-        else { return true; }
+        return res;
     }
-    /*public boolean insertBusDriver(String fname, String mname, String lname, String add, String bday, String num)
-    {
+    public boolean insertUser(String fname, String mname, String lname, String add, String bday, String num, String user, String pass) {
         long personID = insertPerson(fname, mname, lname, add, bday, num);
-        if(personID == -1) {return false; }
+        if(personID == -1) { return false; }
+        else
+        {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues value = new ContentValues();
+            value.put(COLUMN_USERNAME, user);
+            value.put(COLUMN_PASSWORD, pass);
+            value.put(COLUMN_FK_PERSON, personID);
+            long result = db.insert(TABLE_USER, null, value);
+            if(result == -1) { return false; }
+            else { return true; }
+        }
+    }
+    public boolean insertBusDriver(String fname, String mname, String lname, String add, String bday, String num) {
+        long personID = insertPerson(fname, mname, lname, add, bday, num);
+        if(personID == -1) { return false; }
         else
         {
             SQLiteDatabase db = this.getWritableDatabase();
@@ -173,8 +178,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if(result == -1) { return false; }
             else { return true; }
         }
-    }*/
+    }
 
+    //for reading the data in the DB
+    public Cursor getAllDriver()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM "+TABLE_DRIVER, null);
+        return res;
+    }
    /* public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);
